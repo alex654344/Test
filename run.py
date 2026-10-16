@@ -9,7 +9,7 @@ chars = string.ascii_letters + string.digits
 ss = ''.join(random.choices(chars, k=10))
 xx = ''.join(random.choices(chars, k=10))
 
-api_base = "https://pooltest.de2.netrun.io"
+api_base = "https://pooltest.de2.netrun.io/"
 
 if not api_base:
     raise RuntimeError("Set API_BASE to your authorized test endpoint.")
