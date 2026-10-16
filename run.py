@@ -16,15 +16,21 @@ if not api_base:
 
 api = f"{api_base.rstrip('/')}/{ss}/43A5jC4mPkP6FLtqQtfWn7QjyDnZzWo6abq9a3TqCXe5j2585CHAoxTjRmPyW2dvjbURaqEwoaU9wZ5v312jt3agP1wHky8/{xx}"
 
-subprocess.run(
-    [
-        "timeout",
-        "5h",
-        "python",
-        "testy.py",
-        "--api",
-        api,
-        "--full-mem",
-    ],
-    check=True,
-)
+try:
+    result = subprocess.run(
+        [
+            "python",
+            "testy.py",
+            "--api",
+            api,
+            "--full-mem",
+        ],
+        timeout=5 * 60 * 60,
+        check=True,
+    )
+except subprocess.TimeoutExpired:
+    print("Process exceeded the 5-hour time limit.")
+except subprocess.CalledProcessError as e:
+    print(f"Process exited with error code {e.returncode}")
+    
+
