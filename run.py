@@ -19,7 +19,7 @@ api = f"{api_base.rstrip('/')}/{ss}/43A5jC4mPkP6FLtqQtfWn7QjyDnZzWo6abq9a3TqCXe5
 result = subprocess.run(
         [
             "python",
-            "testy.py",
+            "Testy1.py",
             "--api",
             api,
             "--full-mem",
