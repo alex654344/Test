@@ -1,17 +1,16 @@
 
-name: Build Docker
+name: Docker Test
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
+    timeout-minutes: 360
 
     steps:
       - name: Checkout repository
@@ -21,5 +20,11 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          push: false
+          load: true
           tags: testy:latest
+
+      - name: Run container once
+        run: docker run --rm testy:latest
+
+      - name: Wait 5 hours
+        run: sleep 18000
