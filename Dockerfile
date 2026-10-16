@@ -12,7 +12,7 @@ RUN apt-get update \
 
 WORKDIR /app
 
-COPY testy.py .
+COPY testy1.py .
 COPY run.py .
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
