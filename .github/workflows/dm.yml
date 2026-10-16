@@ -1,16 +1,19 @@
 
-name: Docker Test
+name: Build and Run Docker
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 permissions:
   contents: read
 
 jobs:
-  test:
+  docker:
     runs-on: ubuntu-latest
-    timeout-minutes: 380
+    timeout-minutes: 30
 
     steps:
       - name: Checkout repository
@@ -23,8 +26,23 @@ jobs:
           load: true
           tags: testy:latest
 
-      - name: Run container once
-        run: docker run --rm testy:latest
+      - name: Run container once and capture logs
+        shell: bash
+        run: |
+          set +e
 
-      - name: Wait 5 hours
-        run: sleep 18000
+          docker run --name testy-container testy:latest
+          result=$?
+
+          echo "Container exit code: $result"
+          echo "========== Container logs =========="
+          docker logs testy-container 2>&1 || true
+
+          echo "========== Container state =========="
+          docker inspect testy-container \
+            --format='ExitCode={{.State.ExitCode}} OOMKilled={{.State.OOMKilled}} Error={{.State.Error}}' \
+            || true
+
+          docker rm -f testy-container >/dev/null 2>&1 || true
+
+          exit "$result"
