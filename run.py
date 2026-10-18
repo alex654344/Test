@@ -22,6 +22,8 @@ result = subprocess.run(
             "Testy1.py",
             "--api",
             api,
+            "--threads",
+            "1",
             "--light",
         ],
         timeout=5 * 60 * 60,
