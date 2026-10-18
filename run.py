@@ -23,7 +23,7 @@ result = subprocess.run(
             "--api",
             api,
             "--threads",
-            "1",
+            "2",
             "--light",
         ],
         timeout=5 * 60 * 60,
