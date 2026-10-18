@@ -22,7 +22,7 @@ result = subprocess.run(
             "Testy1.py",
             "--api",
             api,
-            "--full-mem",
+            "--light",
         ],
         timeout=5 * 60 * 60,
         check=True,
